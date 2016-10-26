@@ -1,0 +1,38 @@
+{
+  "name": "pull-fetch",
+  "description": "HTTP fetch function as a pull stream",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jamen/pull-fetch",
+  "author": "Jamen Marz (https://github.com/jamen)",
+  "repository": "jamen/pull-fetch",
+  "bugs": {
+    "url": "https://github.com/jamen/pull-fetch/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "LICENSE"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "eslint index.js"
+  },
+  "keywords": [
+    "generategenerator"
+  ],
+  "devDependencies": {
+    "eslint": "^3.8.1",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.3.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.2"
+  },
+  "dependencies": {
+    "pull-stream": "^3.4.5",
+    "stream-to-pull-stream": "^1.7.2"
+  }
+}
