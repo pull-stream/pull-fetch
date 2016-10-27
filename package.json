@@ -21,7 +21,9 @@
     "test": "eslint index.js"
   },
   "keywords": [
-    "generategenerator"
+    "pull-stream",
+    "fetch",
+    "request"
   ],
   "devDependencies": {
     "eslint": "^3.8.1",
