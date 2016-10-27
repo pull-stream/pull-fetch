@@ -4,6 +4,7 @@
 
 ```js
 pull(
+  pull.values([ 'Hello', 'World' ])
   fetch.result('http://example.com/', { method: 'POST' }),
   pull.map(result => result.toString()),
   pull.log()
@@ -30,7 +31,7 @@ When you set `options.body = true`, it turns into a through stream and tries to 
 
 All options are passed into [`http.request`](https://nodejs.org/api/http.html#http_http_request_options_callback)/[`https.request`](https://nodejs.org/api/https.html#https_https_request_options_callback), in addition to:
 
- - `body` (`Boolean`): Enable reading content for the request body (turns into a Through stream).
+ - `body` (`String`): Enables streaming data in as a request body.  Value is the `Content-Type` of the data.
 
 #### Example
 
@@ -40,7 +41,7 @@ pull(
   // Stringify objects for request:
   stringify(),
   // Make a POST request with body:
-  fetch('https://example.com', { method: 'POST', body: true }),
+  fetch('https://example.com', { method: 'POST', body: 'application/json' }),
   // Handle response stream in an async way
   pull.mapAsync((resp, done) => {
     return pull(resp, pull.collect(done))
@@ -53,7 +54,7 @@ pull(
 
 A wrapper around `fetch` that resolves the stream into a buffer.  Parameters are the same.
 
-It is used as more simple version of `fetch`, if you just want to end value.
+It is used as more simple version of `fetch`, if you just want the end value.
 
 #### Example
 

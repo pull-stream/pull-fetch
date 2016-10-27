@@ -29,9 +29,14 @@ fetch.json = json
 function fetch (url, options) {
   options = Object.assign(parseUrl(url), options)
   var request = options.protocol === 'https:' ? httpsRequest : httpRequest
-  var req = request(options)
+  var req = null
 
   if (options.body) {
+    options.header = Object.assign({
+      'content-type': options.body
+    }, options.header)
+
+    req = request(options)
     // Return through function for reading body
     return function (read) {
       return function (end, cb) {
@@ -45,6 +50,7 @@ function fetch (url, options) {
       }
     }
   } else {
+    req = request(options)
     // Return a source function for no body
     return function (end, cb) {
       if (end) return cb(end)
