@@ -1,6 +1,6 @@
 # pull-fetch [![NPM version](https://badge.fury.io/js/pull-fetch.svg)](https://npmjs.org/package/pull-fetch) [![Build Status](https://travis-ci.org/jamen/pull-fetch.svg?branch=master)](https://travis-ci.org/jamen/pull-fetch)
 
-> HTTP fetch function for pull stream
+> Fetch function for pull stream
 
 ```js
 pull(
