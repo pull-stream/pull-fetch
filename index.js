@@ -29,25 +29,27 @@ fetch.json = json
 function fetch (url, options) {
   options = Object.assign(parseUrl(url), options)
   var request = options.protocol === 'https:' ? httpsRequest : httpRequest
-  var body = options.body
-  var req = null
+  var req = request(options)
 
-  return function (end, cb) {
-    if (!req) {
-      req = request(options, function (resp) {
-        cb(null, toPull.source(resp))
-      })
-
-      // Write body
-      if (body) {
-        // Stringify if body is object
-        if (typeof body === 'object' && !(body instanceof Buffer)) {
-          body = JSON.stringify(body)
-        }
-        req.write(options.body)
+  if (options.body) {
+    // Return through function for reading body
+    return function (read) {
+      return function (end, cb) {
+        read(end, function (end, data) {
+          if (end) return cb(end)
+          req.write(data)
+          req.on('error', cb)
+          req.on('response', resp => cb(null, toPull.source(resp)))
+          req.end()
+        })
       }
-
+    }
+  } else {
+    // Return a source function for no body
+    return function (end, cb) {
+      if (end) return cb(end)
       req.on('error', cb)
+      req.on('response', resp => cb(null, toPull.source(resp)))
       req.end()
     }
   }
