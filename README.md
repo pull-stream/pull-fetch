@@ -24,20 +24,25 @@ $ npm install --save pull-fetch
 
 HTTP request the `url` and receive a response pull stream.
 
+When you set `options.body = true`, it turns into a through stream and tries to read data for the request.  Otherwise it is just readable.
+
 #### Options
 
 All options are passed into [`http.request`](https://nodejs.org/api/http.html#http_http_request_options_callback)/[`https.request`](https://nodejs.org/api/https.html#https_https_request_options_callback), in addition to:
 
- - `body` (`String`|`Buffer`|`Object`): Body of the HTTP request (objects get serialized).
+ - `body` (`Boolean`): Enable reading content for the request body (turns into a Through stream).
 
 #### Example
 
 ```js
 pull(
-  // Make a POST request with a body:
-  fetch('https://example.com', { method: 'POST', body: { foo: 123 } }),
+  pull.values([ { foo: 'bar' } ]),
+  // Stringify objects for request:
+  stringify(),
+  // Make a POST request with body:
+  fetch('https://example.com', { method: 'POST', body: true }),
+  // Handle response stream in an async way
   pull.mapAsync((resp, done) => {
-    // Handle response stream in an async way
     return pull(resp, pull.collect(done))
   }),
   pull.log()
@@ -47,6 +52,8 @@ pull(
 ### `fetch.result(url, [options])`
 
 A wrapper around `fetch` that resolves the stream into a buffer.  Parameters are the same.
+
+It is used as more simple version of `fetch`, if you just want to end value.
 
 #### Example
 
