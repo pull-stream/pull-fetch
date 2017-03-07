@@ -30,35 +30,38 @@ function fetch (url, options) {
   options = Object.assign(parseUrl(url), options)
   var request = options.protocol === 'https:' ? httpsRequest : httpRequest
   var req = null
+  var ended = false
+  var stream
+
+  function readResponse (end, cb) {
+    if (end || ended) return cb(end || ended)
+    req.on('error', err => {
+      ended = err
+      cb(err)
+    })
+    req.on('response', resp => {
+      ended = true
+      cb(null, toPull.source(resp))
+    })
+  }
 
   if (options.body) {
     options.header = Object.assign({
       'content-type': options.body
     }, options.header)
 
-    req = request(options)
-    // Return through function for reading body
-    return function (read) {
-      return function (end, cb) {
-        read(end, function (end, data) {
-          if (end) return cb(end)
-          req.write(data)
-          req.on('error', cb)
-          req.on('response', resp => cb(null, toPull.source(resp)))
-          req.end()
-        })
-      }
+    stream = function (source) {
+      pull(source, toPull.sink(req))
+      return readResponse
     }
+    req = request(options)
   } else {
+    stream = readResponse
     req = request(options)
-    // Return a source function for no body
-    return function (end, cb) {
-      if (end) return cb(end)
-      req.on('error', cb)
-      req.on('response', resp => cb(null, toPull.source(resp)))
-      req.end()
-    }
+    req.end()
   }
+
+  return stream
 }
 
 /**
