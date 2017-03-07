@@ -52,10 +52,17 @@ function fetch (url, options) {
   } else {
     req = request(options)
     // Return a source function for no body
+    var ended = false
     return function (end, cb) {
-      if (end) return cb(end)
-      req.on('error', cb)
-      req.on('response', resp => cb(null, toPull.source(resp)))
+      if (end || ended) return cb(end || ended)
+      req.on('error', err => {
+        ended = err
+        cb(err)
+      })
+      req.on('response', resp => {
+        ended = true
+        cb(null, toPull.source(resp))
+      })
       req.end()
     }
   }
