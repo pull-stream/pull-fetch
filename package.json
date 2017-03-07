@@ -1,7 +1,7 @@
 {
   "name": "pull-fetch",
   "description": "Fetch function for pull stream",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "homepage": "https://github.com/jamen/pull-fetch",
   "author": "Jamen Marz (https://github.com/jamen)",
   "repository": "jamen/pull-fetch",
