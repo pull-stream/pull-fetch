@@ -5,6 +5,21 @@ var fetch = require('../');
 
 test('fetch', function(t) {
 
+  t.test('should return source stream that ends', function(t) {
+
+    nock('https://example.com')
+      .get('/')
+      .reply(200, 'success')
+
+    pull(
+      fetch('https://example.com'),
+      pull.onEnd( ()=>{
+        nock.cleanAll();
+        t.end();
+      })
+    );
+  });
+
   t.test('should return through stream when mime type is given', function(t) {
 
     var body;
@@ -24,10 +39,12 @@ test('fetch', function(t) {
       pull.drain((data) => {
         t.equal(body, '{"foo":"bar"}', 'POST body was correctly sent');
         t.deepEqual(data, new Buffer('ok'), 'result is buffer containing response');
-      }, t.end));
+      }, ()=>{
+        nock.cleanAll();
+        t.end();
+      }));
   });
 
-  nock.cleanAll();
   t.end();
 });
 
