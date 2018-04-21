@@ -1,6 +1,5 @@
 
 const test = require('tape')
-const nock = require('nock')
 const fetch = require('./lib/pull-fetch.js')
 const { pull, collect, values, map, onEnd } = require('pull-stream') 
 const { createServer } = require('http')
