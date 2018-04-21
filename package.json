@@ -1,7 +1,7 @@
 {
   "name": "pull-fetch",
   "description": "Fetch function for pull stream",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/jamen/pull-fetch",
   "author": "Jamen Marz (https://github.com/jamen)",
   "main": "lib/pull-fetch.js",
@@ -14,12 +14,8 @@
     "lib"
   ],
   "devDependencies": {
-    "nock": "^9.2.5",
     "pull-stream": "^3.6.7",
     "tape": "^4.9.0"
-  },
-  "dependencies": {
-    "stream-to-pull-stream": "^1.7.2"
   },
   "keywords": [
     "pull-stream",
