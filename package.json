@@ -4,40 +4,29 @@
   "version": "0.1.0",
   "homepage": "https://github.com/jamen/pull-fetch",
   "author": "Jamen Marz (https://github.com/jamen)",
+  "main": "lib/pull-fetch.js",
   "repository": "jamen/pull-fetch",
-  "bugs": {
-    "url": "https://github.com/jamen/pull-fetch/issues"
-  },
   "license": "MIT",
-  "files": [
-    "index.js",
-    "LICENSE"
-  ],
-  "main": "index.js",
-  "engines": {
-    "node": ">=4"
-  },
   "scripts": {
-    "test": "npm run test:lint && npm run test:tape",
-    "test:tape": "./node_modules/.bin/tape test/test.js | ./node_modules/.bin/tap-spec",
-    "test:lint": "eslint index.js"
+    "test": "node test"
+  },
+  "files": [
+    "lib"
+  ],
+  "devDependencies": {
+    "nock": "^9.2.5",
+    "pull-stream": "^3.6.7",
+    "tape": "^4.9.0"
+  },
+  "dependencies": {
+    "stream-to-pull-stream": "^1.7.2"
   },
   "keywords": [
     "pull-stream",
     "fetch",
     "request"
   ],
-  "devDependencies": {
-    "eslint": "^3.8.1",
-    "eslint-config-standard": "^6.2.1",
-    "eslint-plugin-promise": "^3.3.0",
-    "eslint-plugin-standard": "^2.0.1",
-    "nock": "^9.0.6",
-    "tap-spec": "^4.1.1",
-    "tape": "^4.6.2"
-  },
-  "dependencies": {
-    "pull-stream": "^3.4.5",
-    "stream-to-pull-stream": "^1.7.2"
+  "bugs": {
+    "url": "https://github.com/jamen/pull-fetch/issues"
   }
 }
